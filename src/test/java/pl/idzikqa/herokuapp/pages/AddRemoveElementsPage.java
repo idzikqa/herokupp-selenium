@@ -3,11 +3,12 @@ package pl.idzikqa.herokuapp.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 import pl.idzikqa.herokuapp.hooks.BasePage;
 
 import java.util.List;
 
-public class AddRemoveElements extends BasePage {
+public class AddRemoveElementsPage extends BasePage {
     @FindBy(xpath = "//button[contains(string(),'Add Element')]")
     private WebElement buttonAddElement;
 
@@ -20,13 +21,16 @@ public class AddRemoveElements extends BasePage {
     @FindBy(xpath = "//div[@id='content']//h3")
     private WebElement headerInfo;
 
-    public AddRemoveElements(WebDriver driver) {
+    private String url="https://the-internet.herokuapp.com/add_remove_elements/";
+    private String onPageText="Add/Remove Elements";
+
+    public AddRemoveElementsPage(WebDriver driver) {
         super(driver);
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
     }
 
-    public boolean onThePage() {
-        return gm.doesElementContainsText(headerInfo,"Add/Remove Elements");
+    public void onThePage() {
+        driver.get(url);
+        Assert.assertTrue(gm.doesElementContainsText(headerInfo,onPageText));
     }
 
     public void addElements(int number) {

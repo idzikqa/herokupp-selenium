@@ -5,7 +5,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pl.idzikqa.herokuapp.hooks.BaseTest;
 
-public class AddAndRemoveElements extends BaseTest {
+public class AddAndRemoveElementsTest extends BaseTest {
 
     @DataProvider(name = "provider")
     public Object[][] feed() {
@@ -15,9 +15,9 @@ public class AddAndRemoveElements extends BaseTest {
     @Test(dataProvider = "provider")
     public void addAndRemoveElements(String value) {
 
-        Assert.assertTrue(addRemoveElements.onThePage());
-        addRemoveElements.addElements(Integer.valueOf(value));
-        addRemoveElements.deleteElements(Integer.valueOf(value));
+        addRemoveElementsPage.onThePage();
+        addRemoveElementsPage.addElements(Integer.valueOf(value));
+        addRemoveElementsPage.deleteElements(Integer.valueOf(value));
 
     }
 }

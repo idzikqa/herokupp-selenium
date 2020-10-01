@@ -3,9 +3,10 @@ package pl.idzikqa.herokuapp.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 import pl.idzikqa.herokuapp.hooks.BasePage;
 
-public class DragAndDrop extends BasePage {
+public class DragAndDropPage extends BasePage {
 
     @FindBy(xpath = "//div[@id='columns']//div[1]//header")
     private WebElement fromHeader;
@@ -16,17 +17,22 @@ public class DragAndDrop extends BasePage {
     @FindBy(xpath = "//div[@class='example']//h3")
     private WebElement headerInfo;
 
-    public DragAndDrop(WebDriver driver) {
+    private String url = "https://the-internet.herokuapp.com/drag_and_drop";
+    private String onPageText = "Drag and Drop";
+    private String fromElement = "#column-a";
+    private String toElement = "#column-b";
+
+    public DragAndDropPage(WebDriver driver) {
         super(driver);
-        driver.get("https://the-internet.herokuapp.com/drag_and_drop");
     }
 
-    public boolean onThePage() {
-        return gm.doesElementContainsText(headerInfo, "Drag and Drop");
+    public void onThePage() {
+        driver.get(url);
+        Assert.assertTrue(gm.doesElementContainsText(headerInfo, onPageText));
     }
 
     public void dragAndDropHTML5() {
-        gm.dragAndDropHTML5("#column-a", "#column-b",fromHeader, toHeader);
+        gm.dragAndDropHTML5(fromElement, toElement, fromHeader, toHeader);
     }
 
 

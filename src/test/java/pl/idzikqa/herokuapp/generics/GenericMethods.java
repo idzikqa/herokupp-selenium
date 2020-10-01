@@ -182,5 +182,21 @@ public class GenericMethods {
         Assert.assertTrue(toHeader.getText().contains(fromHeader.getText()));
     }
 
+    private void hoverOverTheElementWithTextAssertion(WebElement webElement, By locator, String text) {
+        if (isElementDisplayed(webElement)) {
+            Actions action = new Actions(driver);
+            action.moveToElement(webElement).perform();
+            WebElement resultElement = webElement.findElement((locator));
+            if (isElementDisplayed(resultElement)) {
+                Assert.assertTrue(resultElement.getText().equals(text));
+            }
+        }
+    }
 
+    public void hoverOverTheElementsWithTextAssertion(List<WebElement> elementList, By locator, String text) {
+        for (WebElement webElement : elementList
+        ) {
+            hoverOverTheElementWithTextAssertion(webElement, locator, text);
+        }
+    }
 }
