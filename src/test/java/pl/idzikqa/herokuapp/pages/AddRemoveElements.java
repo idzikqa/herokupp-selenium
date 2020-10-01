@@ -25,12 +25,8 @@ public class AddRemoveElements extends BasePage {
         driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
     }
 
-    private void clickAddButton() {
-        buttonAddElement.click();
-    }
-
-    public void addElement(int previousSize) {
-        gm.clickElementWithSizeAssertion(buttonAddElement, elements, previousSize + 1);
+    public boolean onThePage() {
+        return gm.doesElementContainsText(headerInfo,"Add/Remove Elements");
     }
 
     public void addElements(int number) {
@@ -39,17 +35,18 @@ public class AddRemoveElements extends BasePage {
         }
     }
 
-    public void deleteElement(int previousSize) {
-        gm.clickElementWithSizeAssertion(buttonDeleteElement, elements, previousSize);
-    }
-
     public void deleteElements(int number) {
         for (int i = 1; i < number + 1; i++) {
             this.deleteElement(number - i);
         }
     }
 
-    public boolean onThePage() {
-        return headerInfo.getText().contains("Add/Remove Elements");
+    private void addElement(int previousSize) {
+        gm.clickElementWithSizeAssertion(buttonAddElement, elements, previousSize + 1);
     }
+
+    private void deleteElement(int previousSize) {
+        gm.clickElementWithSizeAssertion(buttonDeleteElement, elements, previousSize);
+    }
+
 }

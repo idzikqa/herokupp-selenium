@@ -1,19 +1,29 @@
 package pl.idzikqa.herokuapp.generics;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import javax.swing.plaf.TableHeaderUI;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.*;
 
 public class GenericMethods {
     private WebDriver driver;
+    private JavascriptExecutor js;
 
     public GenericMethods(WebDriver driver) {
         this.driver = driver;
+        js = (JavascriptExecutor) driver;
     }
 
     public WebElement getElement(String type, String locator) {
@@ -103,4 +113,74 @@ public class GenericMethods {
         WebDriverWait wait = new WebDriverWait(this.driver, timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
+
+    public boolean doesElementContainsText(WebElement webElement, String text) {
+        return webElement.getText().contains(text);
+    }
+
+    private static String readFile(String file) throws IOException {
+        Charset cs = Charset.forName("UTF-8");
+        FileInputStream stream = new FileInputStream(file);
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(stream, cs));
+            StringBuilder builder = new StringBuilder();
+            char[] buffer = new char[8192];
+            int read;
+            while ((read = reader.read(buffer, 0, buffer.length)) > 0) {
+                builder.append(buffer, 0, read);
+            }
+            return builder.toString();
+        } finally {
+            stream.close();
+        }
+    }
+
+    public void dragAndDropHTML5(String source, String target, WebElement fromHeader, WebElement toHeader) {
+        String fromText = fromHeader.getText();
+        String toText = toHeader.getText();
+        try {
+            String basePath = new File("").getAbsolutePath();
+            final String JQUERY_LOAD_SCRIPT = (basePath + "/src/test/resources/jquery_load_helper.js");
+            String jQueryLoader = readFile(JQUERY_LOAD_SCRIPT);
+
+            driver.manage().timeouts().setScriptTimeout(10, SECONDS);
+
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeAsyncScript(jQueryLoader);
+
+            js.executeScript("jQuery(function($) { " + " $('input[name=\"q\"]').val('bada-bing').closest('form').submit(); "
+                    + " }); ");
+
+            String filePath = basePath + "/src/test/resources/drag_and_drop_helper.js";
+
+            StringBuffer buffer = new StringBuffer();
+            String line;
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+            while ((line = br.readLine()) != null)
+                buffer.append(line);
+
+            String javaScript = buffer.toString();
+
+            javaScript = javaScript + "$('" + source + "').simulateDragDrop({ dropTarget: '" + target + "'});";
+            ((JavascriptExecutor) driver).executeScript(javaScript);
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Assert.assertTrue(fromHeader.getText().equals(toText));
+        Assert.assertTrue(toHeader.getText().equals(fromText));
+    }
+
+
+    public void dragAndDropByHeader(WebElement fromElement, WebElement fromHeader, WebElement toElement, WebElement toHeader) {
+
+        Actions actions = new Actions(driver);
+        actions.clickAndHold(fromElement).moveToElement(toElement).release().perform();
+
+        Assert.assertTrue(fromHeader.getText().contains(toHeader.getText()));
+        Assert.assertTrue(toHeader.getText().contains(fromHeader.getText()));
+    }
+
+
 }

@@ -7,12 +7,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import pl.idzikqa.herokuapp.pages.AddRemoveElements;
+import pl.idzikqa.herokuapp.pages.DragAndDrop;
 
 import static pl.idzikqa.herokuapp.data.Configuration.site;
 
 public abstract class BaseTest {
     private WebDriver driver;
     protected AddRemoveElements addRemoveElements;
+    protected DragAndDrop dragAndDrop;
 
 
     @BeforeTest
@@ -22,7 +24,8 @@ public abstract class BaseTest {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get(site);
-        addRemoveElements=new AddRemoveElements(driver);
+        addRemoveElements = new AddRemoveElements(driver);
+        dragAndDrop = new DragAndDrop(driver);
     }
 
     @AfterTest
