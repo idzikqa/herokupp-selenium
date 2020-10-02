@@ -8,12 +8,20 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import javax.swing.plaf.TableHeaderUI;
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static java.util.concurrent.TimeUnit.*;
 
@@ -199,4 +207,38 @@ public class GenericMethods {
             hoverOverTheElementWithTextAssertion(webElement, locator, text);
         }
     }
+
+    public int linkStatus(URL url) {
+        try {
+            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+            http.connect();
+            int respone = http.getResponseCode();
+            http.disconnect();
+            return respone;
+        } catch (IOException e) {
+            return -1;
+        }
+    }
+
+    public List<WebElement> getClickableLinks() {
+        List<WebElement> links = new ArrayList<>();
+        links.addAll(driver.findElements(By.tagName("a")));
+        links.addAll(driver.findElements(By.tagName("img")));
+        return links.stream().filter(element -> element.getAttribute("href") != null).collect(Collectors.toList());
+    }
+
+    public Map<String,Integer> checkLinks(List<WebElement> list){
+        Map<String, Integer> map=new HashMap<>();
+        for (WebElement element:list
+             ) {
+            String href=element.getAttribute("href");
+            try {
+                map.put(href,linkStatus(new URL(href)));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        return map;
+    }
+
 }
