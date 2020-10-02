@@ -1,5 +1,7 @@
 package pl.idzikqa.herokuapp.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,12 +23,15 @@ public class HoversPage extends BasePage {
     private String assertText = "View profile";
     private String assertSelector = "div//a";
 
+    protected static final Logger log= LogManager.getLogger(HoversPage.class.getName());
+
     public HoversPage(WebDriver driver) {
         super(driver);
     }
 
     public void onThePage() {
         driver.get(url);
+        log.debug("on The Page");
         Assert.assertTrue(gm.doesElementContainsText(headerInfo, onPageText));
     }
 

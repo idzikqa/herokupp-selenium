@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+    <Properties>
+        <Property name="basePath">./logs</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="HoversPage" fileName="${basePath}/app.log" filePattern="${basePath}/app-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %level %c{2} %msg%n"></PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"></TimeBasedTriggeringPolicy>
+                <SizeBasedTriggeringPolicy size="100 KB"></SizeBasedTriggeringPolicy>
+            </Policies>
+        </RollingFile>
+        <Console name="Console" target="">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %level %c{2} %msg%n"></PatternLayout>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="HoversPage"></AppenderRef>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -17,6 +17,7 @@
     <selenium.java>3.141.59</selenium.java>
     <webdriver.version>3.6.2</webdriver.version>
     <testng.version>7.1.0</testng.version>
+    <log4j.core>2.13.3</log4j.core>
 </properties>
     <build>
 <plugins>
@@ -28,17 +29,17 @@
             <target>${maven.compiler.target}</target>
         </configuration>
     </plugin>
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven.surfire.plugin}</version>
-        <configuration>
-            <systemPropertyVariables>
-                <browser>chrome</browser>
-                <headless>false</headless>
-            </systemPropertyVariables>
-        </configuration>
-    </plugin>
+<!--    <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-surefire-plugin</artifactId>-->
+<!--        <version>${maven.surfire.plugin}</version>-->
+<!--        <configuration>-->
+<!--            <systemPropertyVariables>-->
+<!--                <browser>chrome</browser>-->
+<!--                <headless>false</headless>-->
+<!--            </systemPropertyVariables>-->
+<!--        </configuration>-->
+<!--    </plugin>-->
 </plugins>
 </build>
 <dependencies>
@@ -59,5 +60,11 @@
     <version>${testng.version}</version>
     <scope>test</scope>
 </dependency>
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>${log4j.core}</version>
+    </dependency>
+
 </dependencies>
 </project>
