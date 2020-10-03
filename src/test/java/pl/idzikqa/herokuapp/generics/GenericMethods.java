@@ -1,9 +1,7 @@
 package pl.idzikqa.herokuapp.generics;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,18 +14,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.concurrent.TimeUnit.*;
 
 public class GenericMethods {
     private WebDriver driver;
     private JavascriptExecutor js;
+    private String directory = "./screenshots";
 
     public GenericMethods(WebDriver driver) {
         this.driver = driver;
@@ -199,12 +196,31 @@ public class GenericMethods {
                 Assert.assertTrue(resultElement.getText().equals(text));
             }
         }
+        takeScreenShot();
     }
 
     public void hoverOverTheElementsWithTextAssertion(List<WebElement> elementList, By locator, String text) {
         for (WebElement webElement : elementList
         ) {
             hoverOverTheElementWithTextAssertion(webElement, locator, text);
+        }
+    }
+
+    private String getRandomString() {
+        return Stream
+                .generate(() -> Math.random())
+                .limit(10).reduce((a, b) -> a + b)
+                .get()
+                .toString().replace(".", "");
+    }
+
+    private void takeScreenShot() {
+        String file = "screen" + getRandomString() + ".png";
+        File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(source, new File(directory, file));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -227,13 +243,13 @@ public class GenericMethods {
         return links.stream().filter(element -> element.getAttribute("href") != null).collect(Collectors.toList());
     }
 
-    public Map<String,Integer> checkLinks(List<WebElement> list){
-        Map<String, Integer> map=new HashMap<>();
-        for (WebElement element:list
-             ) {
-            String href=element.getAttribute("href");
+    public Map<String, Integer> checkLinks(List<WebElement> list) {
+        Map<String, Integer> map = new HashMap<>();
+        for (WebElement element : list
+        ) {
+            String href = element.getAttribute("href");
             try {
-                map.put(href,linkStatus(new URL(href)));
+                map.put(href, linkStatus(new URL(href)));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
