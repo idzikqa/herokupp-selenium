@@ -1,18 +1,13 @@
 package pl.idzikqa.herokuapp.testcases;
 
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pl.idzikqa.herokuapp.hooks.BaseTest;
+import pl.idzikqa.herokuapp.providers.AddAndRemoveElementsProvider;
 
 public class AddAndRemoveElementsTest extends BaseTest {
 
-    @DataProvider(name = "provider")
-    public Object[][] feed() {
-        return new Object[][]{{"2"},{"3"}};
-    }
 
-    @Test(dataProvider = "provider", groups = {"smoke"})
+    @Test(dataProvider = "provider", dataProviderClass = AddAndRemoveElementsProvider.class, groups = {"smoke"})
     public void addAndRemoveElements(String value) {
 
         addRemoveElementsPage.onThePage();
