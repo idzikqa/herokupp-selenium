@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 import pl.idzikqa.herokuapp.hooks.BaseTest;
 
 public class HoversTest extends BaseTest {
-    @Test
+    @Test(groups = {"smoke"})
     public void HoverTest(){
 
         hoversPage.onThePage();

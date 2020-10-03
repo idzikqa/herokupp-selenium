@@ -4,10 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
 import pl.idzikqa.herokuapp.pages.AddRemoveElementsPage;
 import pl.idzikqa.herokuapp.pages.MainPage;
 import pl.idzikqa.herokuapp.pages.DragAndDropPage;
@@ -22,20 +19,50 @@ public abstract class BaseTest {
     protected DragAndDropPage dragAndDropPage;
     protected HoversPage hoversPage;
 
-    @BeforeMethod
+    @BeforeClass
+    public void beforeClass() {
+        System.out.println("Before class");
+    }
+
+    @AfterClass
+    public void afterClass() {
+        System.out.println("After class");
+    }
+
+    @BeforeSuite
+    public void beforeSuite() {
+        System.out.println("Before suite");
+    }
+
+    @AfterSuite
+    public void afterSuite() {
+        System.out.println("After suite");
+    }
+
+    @BeforeTest
+    public void beforeTest() {
+        System.out.println("Before test in suite");
+    }
+
+    @AfterTest
+    public void afterTest(){
+        System.out.println("After test in suite");
+    }
+
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         ChromeOptions options = new ChromeOptions();
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get(site);
-        mainPage =new MainPage(driver);
+        mainPage = new MainPage(driver);
         addRemoveElementsPage = new AddRemoveElementsPage(driver);
         dragAndDropPage = new DragAndDropPage(driver);
-        hoversPage=new HoversPage(driver);
+        hoversPage = new HoversPage(driver);
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         driver.close();
         driver.quit();

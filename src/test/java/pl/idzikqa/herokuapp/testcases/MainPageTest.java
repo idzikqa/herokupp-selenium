@@ -5,7 +5,7 @@ import pl.idzikqa.herokuapp.hooks.BaseTest;
 
 public class MainPageTest extends BaseTest {
 
-    @Test
+    @Test(groups = {"regression"})
     public void checkAllLinks() {
 
         mainPage.onThePage();

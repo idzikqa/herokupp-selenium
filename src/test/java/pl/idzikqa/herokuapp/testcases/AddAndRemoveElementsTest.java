@@ -12,7 +12,7 @@ public class AddAndRemoveElementsTest extends BaseTest {
         return new Object[][]{{"2"},{"3"}};
     }
 
-    @Test(dataProvider = "provider")
+    @Test(dataProvider = "provider", groups = {"smoke"})
     public void addAndRemoveElements(String value) {
 
         addRemoveElementsPage.onThePage();
