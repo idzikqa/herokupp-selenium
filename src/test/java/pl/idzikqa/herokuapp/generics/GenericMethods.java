@@ -196,7 +196,6 @@ public class GenericMethods {
                 Assert.assertTrue(resultElement.getText().equals(text));
             }
         }
-        takeScreenShot();
     }
 
     public void hoverOverTheElementsWithTextAssertion(List<WebElement> elementList, By locator, String text) {
