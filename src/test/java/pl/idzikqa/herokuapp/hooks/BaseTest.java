@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pl.idzikqa.herokuapp.pages.AddRemoveElementsPage;
 import pl.idzikqa.herokuapp.pages.MainPage;
@@ -54,19 +55,16 @@ public abstract class BaseTest {
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser"})
     public void setup(@Optional("chrome") String browser) {
-        if (browser.equals("chrome")){
+        if (browser.equals("chrome")) {
             ChromeOptions options = new ChromeOptions();
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver(options);
-            driver.manage().window().maximize();
-        }
-        else {
+        } else {
             FirefoxOptions options = new FirefoxOptions();
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver(options);
-            driver.manage().window().maximize();
         }
-
+        driver.manage().window().maximize();
         driver.get(site);
         mainPage = new MainPage(driver);
         addRemoveElementsPage = new AddRemoveElementsPage(driver);
@@ -75,7 +73,13 @@ public abstract class BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown() {
+    public void tearDown(ITestResult testResult) {
+        if (testResult.getStatus() == ITestResult.FAILURE) {
+            System.out.println("----- FAILED ----- " + testResult.getMethod().getMethodName());
+        }
+        if (testResult.getStatus() == ITestResult.SUCCESS) {
+            System.out.println("----- SUCCESS ----- " + testResult.getMethod().getMethodName());
+        }
         driver.close();
         driver.quit();
     }
