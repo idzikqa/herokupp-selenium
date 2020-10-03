@@ -4,7 +4,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import pl.idzikqa.herokuapp.pages.AddRemoveElementsPage;
 import pl.idzikqa.herokuapp.pages.MainPage;
@@ -20,7 +22,7 @@ public abstract class BaseTest {
     protected DragAndDropPage dragAndDropPage;
     protected HoversPage hoversPage;
 
-    @BeforeTest
+    @BeforeMethod
     public void setup() {
         ChromeOptions options = new ChromeOptions();
         WebDriverManager.chromedriver().setup();
@@ -33,7 +35,7 @@ public abstract class BaseTest {
         hoversPage=new HoversPage(driver);
     }
 
-    @AfterTest
+    @AfterMethod
     public void tearDown() {
         driver.close();
         driver.quit();
