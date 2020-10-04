@@ -6,6 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 
 import javax.swing.plaf.TableHeaderUI;
@@ -203,6 +204,7 @@ public class GenericMethods {
         ) {
             hoverOverTheElementWithTextAssertion(webElement, locator, text);
         }
+        Reporter.log("raport z hovera");
     }
 
     private String getRandomString() {

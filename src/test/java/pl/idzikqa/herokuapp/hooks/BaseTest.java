@@ -1,5 +1,7 @@
 package pl.idzikqa.herokuapp.hooks;
 
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,6 +23,9 @@ public abstract class BaseTest {
     protected AddRemoveElementsPage addRemoveElementsPage;
     protected DragAndDropPage dragAndDropPage;
     protected HoversPage hoversPage;
+
+    protected ExtentReports reports;
+    protected ExtentTest test;
 
 //    @BeforeClass
 //    public void beforeClass() {
@@ -55,6 +60,8 @@ public abstract class BaseTest {
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser"})
     public void setup(@Optional("chrome") String browser) {
+        reports=new ExtentReports("./reports/test.html");
+        test=reports.startTest("Verify Test");
         if (browser.equals("chrome")) {
             ChromeOptions options = new ChromeOptions();
             WebDriverManager.chromedriver().setup();
@@ -80,6 +87,8 @@ public abstract class BaseTest {
         if (testResult.getStatus() == ITestResult.SUCCESS) {
             System.out.println("----- SUCCESS ----- " + testResult.getMethod().getMethodName());
         }
+        reports.endTest(test);
+        reports.flush();
         driver.close();
         driver.quit();
     }
