@@ -4,7 +4,7 @@ import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
 
-public class MyListener implements IInvokedMethodListener {
+public class MyInvokeMethodListener implements IInvokedMethodListener {
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
         System.out.println(
