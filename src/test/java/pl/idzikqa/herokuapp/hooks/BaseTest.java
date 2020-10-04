@@ -2,6 +2,7 @@ package pl.idzikqa.herokuapp.hooks;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,6 +15,7 @@ import pl.idzikqa.herokuapp.pages.AddRemoveElementsPage;
 import pl.idzikqa.herokuapp.pages.MainPage;
 import pl.idzikqa.herokuapp.pages.DragAndDropPage;
 import pl.idzikqa.herokuapp.pages.HoversPage;
+import pl.idzikqa.herokuapp.tools.ScreenShot;
 
 import static pl.idzikqa.herokuapp.data.Configuration.site;
 
@@ -26,6 +28,8 @@ public abstract class BaseTest {
 
     protected ExtentReports reports;
     protected ExtentTest test;
+
+    private String directory = "../screenshots/";
 
 //    @BeforeClass
 //    public void beforeClass() {
@@ -60,8 +64,8 @@ public abstract class BaseTest {
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser"})
     public void setup(@Optional("chrome") String browser) {
-        reports=new ExtentReports("./reports/test.html");
-        test=reports.startTest("Verify Test");
+        reports = new ExtentReports("./reports/test.html", false);
+        test = reports.startTest("TEST CASE");
         if (browser.equals("chrome")) {
             ChromeOptions options = new ChromeOptions();
             WebDriverManager.chromedriver().setup();
@@ -73,16 +77,20 @@ public abstract class BaseTest {
         }
         driver.manage().window().maximize();
         driver.get(site);
-        mainPage = new MainPage(driver);
-        addRemoveElementsPage = new AddRemoveElementsPage(driver);
-        dragAndDropPage = new DragAndDropPage(driver);
-        hoversPage = new HoversPage(driver);
+        mainPage = new MainPage(driver, test);
+        addRemoveElementsPage = new AddRemoveElementsPage(driver, test);
+        dragAndDropPage = new DragAndDropPage(driver, test);
+        hoversPage = new HoversPage(driver, test);
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult testResult) {
         if (testResult.getStatus() == ITestResult.FAILURE) {
             System.out.println("----- FAILED ----- " + testResult.getMethod().getMethodName());
+            String pathToFile = ScreenShot.takeScreenShot(driver, directory);
+            String imagePath = test.addScreenCapture(pathToFile);
+            test.log(LogStatus.FAIL, "TEST FAILED", imagePath);
+
         }
         if (testResult.getStatus() == ITestResult.SUCCESS) {
             System.out.println("----- SUCCESS ----- " + testResult.getMethod().getMethodName());

@@ -1,5 +1,7 @@
 package pl.idzikqa.herokuapp.pages;
 
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,13 +26,14 @@ public class AddRemoveElementsPage extends BasePage {
     private String url="https://the-internet.herokuapp.com/add_remove_elements/";
     private String onPageText="Add/Remove Elements";
 
-    public AddRemoveElementsPage(WebDriver driver) {
-        super(driver);
+    public AddRemoveElementsPage(WebDriver driver, ExtentTest extentTest) {
+        super(driver,extentTest);
     }
 
     public void onThePage() {
         driver.get(url);
         Assert.assertTrue(gm.doesElementContainsText(headerInfo,onPageText));
+        test.log(LogStatus.INFO,"Add/Remove Elements on the Page");
     }
 
     public void addElements(int number) {

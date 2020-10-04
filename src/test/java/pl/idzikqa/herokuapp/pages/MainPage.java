@@ -1,5 +1,7 @@
 package pl.idzikqa.herokuapp.pages;
 
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,12 +18,14 @@ public class MainPage extends BasePage {
     private String url = "https://the-internet.herokuapp.com/drag_and_drop";
     private String onThePageText = "Available Examples";
 
-    public MainPage(WebDriver driver) {
-        super(driver);
+
+    public MainPage(WebDriver driver, ExtentTest extentTest) {
+        super(driver, extentTest);
     }
 
     public void onThePage() {
         Assert.assertTrue(headerInfo.getText().equals(onThePageText));
+        test.log(LogStatus.INFO,"Main Page on the Page");
     }
 
     public void checkAllLinks() {

@@ -1,5 +1,7 @@
 package pl.idzikqa.herokuapp.pages;
 
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -25,14 +27,15 @@ public class HoversPage extends BasePage {
 
     protected static final Logger log= LogManager.getLogger(HoversPage.class.getName());
 
-    public HoversPage(WebDriver driver) {
-        super(driver);
+    public HoversPage(WebDriver driver, ExtentTest extentTest) {
+        super(driver,extentTest);
     }
 
     public void onThePage() {
         driver.get(url);
         log.debug("on The Page");
         Assert.assertTrue(gm.doesElementContainsText(headerInfo, onPageText));
+        test.log(LogStatus.INFO,"Hovers on the Page");
     }
 
     public void hoverToElements() {

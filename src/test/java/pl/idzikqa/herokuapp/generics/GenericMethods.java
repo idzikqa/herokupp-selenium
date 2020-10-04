@@ -1,31 +1,26 @@
 package pl.idzikqa.herokuapp.generics;
 
-import org.apache.commons.io.FileUtils;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
-import org.testng.asserts.SoftAssert;
 
-import javax.swing.plaf.TableHeaderUI;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.concurrent.TimeUnit.*;
 
 public class GenericMethods {
     private WebDriver driver;
     private JavascriptExecutor js;
-    private String directory = "./screenshots";
 
     public GenericMethods(WebDriver driver) {
         this.driver = driver;
@@ -207,23 +202,6 @@ public class GenericMethods {
         Reporter.log("raport z hovera");
     }
 
-    private String getRandomString() {
-        return Stream
-                .generate(() -> Math.random())
-                .limit(10).reduce((a, b) -> a + b)
-                .get()
-                .toString().replace(".", "");
-    }
-
-    private void takeScreenShot() {
-        String file = "screen" + getRandomString() + ".png";
-        File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        try {
-            FileUtils.copyFile(source, new File(directory, file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public int linkStatus(URL url) {
         try {
