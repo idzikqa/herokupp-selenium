@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="TestSuite Parent">
+    <listeners>
+        <listener class-name="pl.idzikqa.herokuapp.listeners.MySuiteListener"></listener>
+    </listeners>
+    <suite-files>
+        <suite-file path="testsuite-child1.xml"></suite-file>
+        <suite-file path="testsuite-child2.xml"></suite-file>
+    </suite-files>
+</suite>
