@@ -8,8 +8,9 @@
     <test name="Smoke Tests">
         <classes>
             <class name="pl.idzikqa.herokuapp.testcases.AddAndRemoveElementsTest"></class>
-            <class name="pl.idzikqa.herokuapp.testcases.DragAndDropPageTest"></class>
+            <class name="pl.idzikqa.herokuapp.testcases.DragAndDropTest"></class>
             <class name="pl.idzikqa.herokuapp.testcases.HoversTest"></class>
+            <class name="pl.idzikqa.herokuapp.testcases.FileUploadTest"></class>
         </classes>
     </test>
 </suite>

@@ -11,10 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import pl.idzikqa.herokuapp.pages.AddRemoveElementsPage;
-import pl.idzikqa.herokuapp.pages.MainPage;
-import pl.idzikqa.herokuapp.pages.DragAndDropPage;
-import pl.idzikqa.herokuapp.pages.HoversPage;
+import pl.idzikqa.herokuapp.pages.*;
 import pl.idzikqa.herokuapp.tools.ScreenShot;
 
 import static pl.idzikqa.herokuapp.data.Configuration.site;
@@ -25,6 +22,7 @@ public abstract class BaseTest {
     protected AddRemoveElementsPage addRemoveElementsPage;
     protected DragAndDropPage dragAndDropPage;
     protected HoversPage hoversPage;
+    protected FileUploadPage fileUploadPage;
 
     protected ExtentReports reports;
     protected ExtentTest test;
@@ -76,11 +74,11 @@ public abstract class BaseTest {
             driver = new FirefoxDriver(options);
         }
         driver.manage().window().maximize();
-        driver.get(site);
         mainPage = new MainPage(driver, test);
         addRemoveElementsPage = new AddRemoveElementsPage(driver, test);
         dragAndDropPage = new DragAndDropPage(driver, test);
         hoversPage = new HoversPage(driver, test);
+        fileUploadPage = new FileUploadPage(driver, test);
     }
 
     @AfterMethod(alwaysRun = true)

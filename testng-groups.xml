@@ -19,7 +19,7 @@
         <classes>
             <class name="pl.idzikqa.herokuapp.testcases.MainPageTest"></class>
             <class name="pl.idzikqa.herokuapp.testcases.AddAndRemoveElementsTest"></class>
-            <class name="pl.idzikqa.herokuapp.testcases.DragAndDropPageTest"></class>
+            <class name="pl.idzikqa.herokuapp.testcases.DragAndDropTest"></class>
             <class name="pl.idzikqa.herokuapp.testcases.HoversTest"></class>
         </classes>
     </test>

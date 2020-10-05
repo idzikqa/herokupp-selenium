@@ -75,13 +75,22 @@ public class GenericMethods {
     }
 
     public void clickElementWithTextAssertion(WebElement webElement, WebElement resultElement, String assertion) {
-        Assert.assertTrue(isElementClickable(webElement));
+        if (isElementClickable(webElement)) {
+            webElement.click();
+            Assert.assertTrue(resultElement.getText().contains(assertion));
+        }
     }
 
     public void clickElementWithSizeAssertion(WebElement webElement, List<WebElement> webElements, int size) {
         if (isElementClickable(webElement)) {
             webElement.click();
             Assert.assertTrue(webElements.size() == size);
+        }
+    }
+
+    public void clickElement(WebElement webElement) {
+        if (isElementClickable(webElement)) {
+            webElement.click();
         }
     }
 
