@@ -24,6 +24,7 @@ public class MainPage extends BasePage {
     }
 
     public void onThePage() {
+        driver.get(url);
         Assert.assertTrue(headerInfo.getText().equals(onThePageText));
         test.log(LogStatus.INFO,"Main Page on the Page");
     }

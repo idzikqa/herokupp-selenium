@@ -38,7 +38,6 @@ public class FileUploadPage extends BasePage {
 
     public void fileUpload(String file) {
         inputFileUpload.sendKeys(file);
-//        RobotMethods.fileUpload(new StringSelection(file));
         gm.clickElementWithTextAssertion(buttonSubmit, headerInfo, assertText);
     }
 }
