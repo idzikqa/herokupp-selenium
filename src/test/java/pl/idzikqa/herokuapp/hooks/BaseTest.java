@@ -23,6 +23,7 @@ public abstract class BaseTest {
     protected DragAndDropPage dragAndDropPage;
     protected HoversPage hoversPage;
     protected FileUploadPage fileUploadPage;
+    protected BasicAuthorizationPage basicAuthorizationPage;
 
     protected ExtentReports reports;
     protected ExtentTest test;
@@ -79,6 +80,7 @@ public abstract class BaseTest {
         dragAndDropPage = new DragAndDropPage(driver, test);
         hoversPage = new HoversPage(driver, test);
         fileUploadPage = new FileUploadPage(driver, test);
+        basicAuthorizationPage = new BasicAuthorizationPage(driver, test);
     }
 
     @AfterMethod(alwaysRun = true)
