@@ -21,6 +21,9 @@
             <class name="pl.idzikqa.herokuapp.testcases.AddAndRemoveElementsTest"></class>
             <class name="pl.idzikqa.herokuapp.testcases.DragAndDropTest"></class>
             <class name="pl.idzikqa.herokuapp.testcases.HoversTest"></class>
+            <class name="pl.idzikqa.herokuapp.testcases.BasicAuthorizationTest"></class>
+            <class name="pl.idzikqa.herokuapp.testcases.BrokenImagesTest"></class>
+            <class name="pl.idzikqa.herokuapp.testcases.FileUploadTest"></class>
         </classes>
     </test>
 </suite>

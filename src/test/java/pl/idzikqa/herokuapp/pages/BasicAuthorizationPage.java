@@ -1,6 +1,7 @@
 package pl.idzikqa.herokuapp.pages;
 
 import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,6 +31,7 @@ public class BasicAuthorizationPage extends BasePage {
 
 
     public void onThePage() {
+        test.log(LogStatus.INFO,"Basic Authorization on the Page");
         Assert.assertTrue(driver.getCurrentUrl().equals("https://the-internet.herokuapp.com/basic_auth"));
     }
 

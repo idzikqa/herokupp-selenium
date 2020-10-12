@@ -245,4 +245,22 @@ public class GenericMethods {
         return map;
     }
 
+    public List<String> findBrokenImages(List<WebElement> listofImages) {
+        List<String> resultList = new ArrayList<>();
+        for (WebElement image : listofImages
+        ) {
+            if (ifImageIsBroken(image)) {
+                resultList.add(image.getAttribute("src"));
+            }
+        }
+        return resultList;
+    }
+
+    private boolean ifImageIsBroken(WebElement image) {
+        if (image.getAttribute("naturalWidth").equals("0")) {
+            return true;
+        }
+        return false;
+    }
+
 }

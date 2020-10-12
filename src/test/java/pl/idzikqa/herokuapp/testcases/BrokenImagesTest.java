@@ -3,11 +3,13 @@ package pl.idzikqa.herokuapp.testcases;
 import org.testng.annotations.Test;
 import pl.idzikqa.herokuapp.hooks.BaseTest;
 
-public class BasicAuthorizationTest extends BaseTest {
-    @Test(groups = {"smoke"})
-    public void basicAuthorizationTest() {
+public class BrokenImagesTest extends BaseTest {
 
-        basicAuthorizationPage.checkAuthorization();
+    @Test(groups = {"smoke"})
+    public void brokenImages() {
+
+        brokenImages.onThePage();
+        brokenImages.checkAllImages();
 
     }
 }
