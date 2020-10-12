@@ -15,7 +15,7 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//div[@id='content']//h2")
     private WebElement headerInfo;
 
-    private String url = "https://the-internet.herokuapp.com/drag_and_drop";
+    private String url = "https://the-internet.herokuapp.com";
     private String onThePageText = "Available Examples";
 
 

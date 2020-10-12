@@ -7,7 +7,7 @@ import pl.idzikqa.herokuapp.providers.AddAndRemoveElementsProvider;
 public class AddAndRemoveElementsTest extends BaseTest {
 
 
-    @Test(dataProvider = "provider", dataProviderClass = AddAndRemoveElementsProvider.class, groups = {"smoke"})
+    @Test(dataProvider = "excelProvider", dataProviderClass = AddAndRemoveElementsProvider.class, groups = {"smoke"})
     public void addAndRemoveElements(String value) {
 
         addRemoveElementsPage.onThePage();
