@@ -25,6 +25,7 @@ public abstract class BaseTest {
     protected FileUploadPage fileUploadPage;
     protected BasicAuthorizationPage basicAuthorizationPage;
     protected BrokenImages brokenImages;
+    protected ChallengingDomPage challengingDomPage;
 
     protected ExtentReports reports;
     protected ExtentTest test;
@@ -83,6 +84,7 @@ public abstract class BaseTest {
         fileUploadPage = new FileUploadPage(driver, test);
         basicAuthorizationPage = new BasicAuthorizationPage(driver, test);
         brokenImages=new BrokenImages(driver,test);
+        challengingDomPage=new ChallengingDomPage(driver,test);
     }
 
     @AfterMethod(alwaysRun = true)

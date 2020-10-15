@@ -81,6 +81,13 @@ public class GenericMethods {
         }
     }
 
+    public void clickElementWithFalseTextAssertion(WebElement webElement, WebElement resultElement, String assertion) {
+        if (isElementClickable(webElement)) {
+            webElement.click();
+            Assert.assertFalse(resultElement.getText().contains(assertion));
+        }
+    }
+
     public void clickElementWithSizeAssertion(WebElement webElement, List<WebElement> webElements, int size) {
         if (isElementClickable(webElement)) {
             webElement.click();
@@ -263,4 +270,60 @@ public class GenericMethods {
         return false;
     }
 
+    public List<List<String>> readHTMLTableExcludeTh(WebElement table, int firstRow, int rowCounter, int firstColumn, int columnCounter) {
+        List<List<String>> result = new ArrayList<>();
+
+        List<WebElement> rows = table.findElements(By.tagName("tr"));
+        Assert.assertTrue(checkDimensions(rows.size(), firstRow, rowCounter));
+        for (int i = firstRow; i < firstRow + rowCounter; i++) {
+            List<WebElement> columns = rows.get(i).findElements(By.tagName("td"));
+            List<String> elementsOfRow = new ArrayList<>();
+            Assert.assertTrue(checkDimensions(columns.size(), firstColumn, columnCounter));
+            for (int j = firstColumn - 1; j < firstColumn + columnCounter - 1; j++) {
+                elementsOfRow.add(columns.get(j).getAttribute("innerText"));
+            }
+            result.add(elementsOfRow);
+        }
+        return result;
+    }
+
+    private boolean checkDimensions(int size, int first, int counter) {
+        return first > 0 && first <= size && first + counter <= size + 1;
+    }
+
+
+    public List<List<String>> readHTMLTableExcludeTh(WebElement table) {
+        List<WebElement> rows = table.findElements(By.tagName("tr"));
+        List<WebElement> columns = rows.get(1).findElements(By.tagName("td"));
+        List<List<String>> result = readHTMLTableExcludeTh(table, 1, rows.size() - 1, 1, columns.size());
+        return result;
+    }
+
+    public String getTextFormCanvas() {
+        List<WebElement> scripts = driver.findElements(By.tagName("script"));
+        String answer = "";
+        for (WebElement script : scripts
+        ) {
+            String innerHTML = script.getAttribute("innerHTML");
+            if (innerHTML.contains("Answer")) {
+                answer = innerHTML.substring(innerHTML.indexOf("Answer"), innerHTML.indexOf("',"));
+            }
+        }
+        return answer;
+    }
+
+    public void clickButtonAndCheckCanvas(WebElement webElement) {
+        String startAnswer = getTextFormCanvas();
+        clickElement(webElement);
+        String endAnswer = getTextFormCanvas();
+        Assert.assertFalse(startAnswer == endAnswer);
+    }
+
+    public void sleep(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
