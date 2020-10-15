@@ -49,11 +49,9 @@ public class ChallengingDomPage extends BasePage {
 
     public void clickButtonsWork() {
         gm.clickButtonAndCheckCanvas(button);
-        gm.sleep(1);
         gm.clickButtonAndCheckCanvas(buttonAlert);
-        gm.sleep(1);
         gm.clickButtonAndCheckCanvas(buttonSuccess);
-        gm.sleep(1);
+
     }
 
 }
